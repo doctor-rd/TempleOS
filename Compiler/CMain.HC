@@ -154,8 +154,7 @@ CAOT *CmpJoin(CCmpCtrl *cc,I64 cmp_flags,U8 *map_name=NULL,U8 mapfile_drv_let=0)
   return res;
 }
 
-CAOT *CmpBuf(U8 *buf,U8 *map_name=NULL,
-  I64 *error_cnt=NULL, I64 *warning_cnt=NULL,U8 mapfile_drv_let=0)
+CAOT *CmpBuf(U8 *buf,U8 *map_name,I64 *error_cnt,I64 *warning_cnt,U8 mapfile_drv_let)
 {
   CCmpCtrl *cc;
   CAOT *res=NULL;

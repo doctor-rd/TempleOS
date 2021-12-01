@@ -8,7 +8,7 @@ I64 HashTypeNum(CHash *tmph)
 
 I64 HashVal(CHash *tmph)
 {//Returns most likely desired value.
-  switch [HashTypeNum(tmph)] {
+  switch (HashTypeNum(tmph)) {
     case HTt_EXPORT_SYS_SYM:
       return tmph(CHashExport *)->val;
     case HTt_IMPORT_SYS_SYM:

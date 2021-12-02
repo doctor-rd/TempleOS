@@ -381,8 +381,8 @@ I64 LexInStr(CCmpCtrl *cc,U8 *buf,I64 size,Bool *done)
 	case '\'':
 	  buf[i++]='\'';
 	  break;
-	case '\`':
-	  buf[i++]='\`';
+	case 0x60:
+	  buf[i++]=0x60;
 	  break;
 	case '\\':
 	  buf[i++]='\\';
@@ -391,7 +391,7 @@ I64 LexInStr(CCmpCtrl *cc,U8 *buf,I64 size,Bool *done)
 	  buf[i++]='"';
 	  break;
 	case 'd':
-	  buf[i++]='$$';
+	  buf[i++]=0x24;
 	  break;
 	case 'n':
 	  buf[i++]='\n';
@@ -409,9 +409,9 @@ I64 LexInStr(CCmpCtrl *cc,U8 *buf,I64 size,Bool *done)
 	    ch=ToUpper(LexGetChar(cc));
 	    if (Bt(char_bmp_hex_numeric,ch)) {
 	      if (ch<='9')
-		j=j<<4+ch-'0';
+		j=(j<<4)+ch-'0';
 	      else
-		j=j<<4+ch-'A'+10;
+		j=(j<<4)+ch-'A'+10;
 	    } else {
 	      cc->flags|=CCF_USE_LAST_U16;
 	      break;
@@ -423,11 +423,11 @@ I64 LexInStr(CCmpCtrl *cc,U8 *buf,I64 size,Bool *done)
 	  cc->flags|=CCF_USE_LAST_U16;
 	  buf[i++]='\\';
       }
-    } else if (ch=='$$') {
-      buf[i++]='$$';
+    } else if (ch==0x24) {
+      buf[i++]=0x24;
       if (cc->dollar_cnt)
 	cc->dollar_cnt--;
-      else if (LexGetChar(cc)!='$$') {
+      else if (LexGetChar(cc)!=0x24) {
 	cc->dollar_cnt=1;
 	cc->flags|=CCF_USE_LAST_U16;
       }
@@ -522,9 +522,9 @@ lex_ident:
 	    ch=ToUpper(LexGetChar(cc));
 	    if (Bt(char_bmp_hex_numeric,ch)) {
 	      if (ch<='9')
-		i=i<<4+ch-'0';
+		i=(i<<4)+ch-'0';
 	      else
-		i=i<<4+ch-'A'+10;
+		i=(i<<4)+ch-'A'+10;
 	    } else {
 	      cc->cur_i64=i;
 	      cc->flags|=CCF_USE_LAST_U16;
@@ -642,10 +642,10 @@ lex_float_start:
 	    switch (ch=LexGetChar(cc)) {
 	      case '0':		k.u8[j]=0;	break;
 	      case '\'':	k.u8[j]='\'';	break;
-	      case '\`':	k.u8[j]='\`';	break;
+	      case 0x60:	k.u8[j]=0x60;	break;
 	      case '"':		k.u8[j]='"';	break;
 	      case '\\':	k.u8[j]='\\';	break;
-	      case 'd':		k.u8[j]='$$';	break;
+	      case 'd':		k.u8[j]=0x24;	break;
 	      case 'n':		k.u8[j]='\n';	break;
 	      case 'r':		k.u8[j]='\r';	break;
 	      case 't':		k.u8[j]='\t';	break;
@@ -656,9 +656,9 @@ lex_float_start:
 		  ch=ToUpper(LexGetChar(cc));
 		  if (Bt(char_bmp_hex_numeric,ch)) {
 		    if (ch<='9')
-		      i=i<<4+ch-'0';
+		      i=(i<<4)+ch-'0';
 		    else
-		      i=i<<4+ch-'A'+10;
+		      i=(i<<4)+ch-'A'+10;
 		  } else {
 		    cc->flags|=CCF_USE_LAST_U16;
 		    break;
@@ -670,10 +670,10 @@ lex_float_start:
 		k.u8[j]='\\';
 		cc->flags|=CCF_USE_LAST_U16;
 	    }
-	  } else if (ch=='$$') {
+	  } else if (ch==0x24) {
 	    ch=LexGetChar(cc);
-	    k.u8[j]='$$';
-	    if (ch!='$$')
+	    k.u8[j]=0x24;
+	    if (ch!=0x24)
 	      cc->flags|=CCF_USE_LAST_U16;
 	  } else
 	    k.u8[j]=ch;

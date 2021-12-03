@@ -180,7 +180,6 @@ KEYWORD help_index	39;
 KEYWORD help_file	40;
 KEYWORD static		41;
 KEYWORD lock		42;
-KEYWORD defined		43;
 KEYWORD interrupt	44;
 KEYWORD haserrcode	45;
 KEYWORD argpop		46;

@@ -933,24 +933,6 @@ pu_export_sys_sym:
 		Lex(cc);
 	      }
 	      return PE_MAYBE_MODIFIERS;
-	    case KW_DEFINED:
-	      if (PREC_TERM>*max_prec)
-		*max_prec=PREC_TERM;
-	      j=0;
-	      while (Lex(cc)=='(')
-		j++;
-	      if (cc->token==TK_IDENT &&
-		    (cc->hash_entry || cc->local_var_entry))
-		ICAdd(cc,IC_IMM_I64,TRUE,cmp.internal_types[RT_I64]);
-	      else
-		ICAdd(cc,IC_IMM_I64,FALSE,cmp.internal_types[RT_I64]);
-	      Lex(cc);
-	      while (j--) {
-		if (cc->token!=')')
-		  LexExcept(cc,"Missing ')' at ");
-		Lex(cc);
-	      }
-	      return PE_MAYBE_MODIFIERS;
 	  }
       }
   }

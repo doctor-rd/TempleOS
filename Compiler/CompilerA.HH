@@ -279,7 +279,6 @@ class CIntermediateStruct
 #define KW_HELP_FILE	40
 #define KW_STATIC	41
 #define KW_LOCK		42
-#define KW_DEFINED	43
 #define KW_INTERRUPT	44
 #define KW_HASERRCODE	45
 #define KW_ARGPOP	46

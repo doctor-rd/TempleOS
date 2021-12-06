@@ -265,10 +265,6 @@ class CIntermediateStruct
 #define KW_OFFSET	26
 #define KW_IMPORT	27
 #define KW__IMPORT	28
-#define KW_IFDEF	29
-#define KW_IFNDEF	30
-#define KW_IFAOT	31
-#define KW_IFJIT	32
 #define KW_ENDIF	33
 #define KW_ASSERT	34
 #define KW_REG		35

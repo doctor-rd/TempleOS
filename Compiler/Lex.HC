@@ -817,8 +817,7 @@ lex_else:
 		  if (!Lex(cc))
 		    goto lex_end;
 		  i=PrsKeyWord(cc);
-		  if (i==KW_IF || i==KW_IFDEF || i==KW_IFNDEF ||
-			i==KW_IFAOT || i==KW_IFJIT)
+		  if (i==KW_IF)
 		    j++;
 		  else if (i==KW_ENDIF)
 		    j--;
@@ -845,10 +844,6 @@ lex_if:
 	      cc->flags&=~CCF_IN_IF;
 	      switch (cc->token) {
 		case TK_IF:	goto lex_if;
-		case TK_IFDEF:	goto lex_ifdef;
-		case TK_IFNDEF:	goto lex_ifndef;
-		case TK_IFAOT:	goto lex_ifaot;
-		case TK_IFJIT:	goto lex_ifjit;
 		case TK_ELSE:	goto lex_else;
 		case TK_ENDIF:	goto lex_cont;
 		default:	goto lex_end;
@@ -856,9 +851,7 @@ lex_if:
 	    } else {
 	      cc->flags&=~CCF_IN_IF;
 	      if (cc->token!=TK_ENDIF && cc->token!=TK_ELSE) {
-		if (cc->token==TK_IF || cc->token==TK_IFDEF ||
-		      cc->token==TK_IFNDEF || cc->token==TK_IFAOT ||
-		      cc->token==TK_IFJIT)
+		if (cc->token==TK_IF)
 		  j=2;
 		else
 		  j=1;
@@ -868,8 +861,7 @@ lex_if:
 		      if (!Lex(cc))
 			goto lex_end;
 		      i=PrsKeyWord(cc);
-		      if (i==KW_IF || i==KW_IFDEF || i==KW_IFNDEF ||
-			    i==KW_IFAOT || i==KW_IFJIT)
+		      if (i==KW_IF)
 			j++;
 		      else if (i==KW_ENDIF)
 			j--;
@@ -883,138 +875,6 @@ lex_if:
 		} while (j);
 	      }
 	    }
-	    break;
-	  case KW_IFDEF:
-	    if (cc->flags & CCF_IN_IF) {
-	      cc->token=TK_IFDEF;
-	      goto lex_end;
-	    }
-lex_ifdef:
-	    cc->flags|=CCF_NO_DEFINES;
-	    if (!Lex(cc)) {
-	      cc->flags&=~CCF_NO_DEFINES;
-	      goto lex_end;
-	    }
-	    cc->flags&=~CCF_NO_DEFINES;
-	    if (cc->token!=TK_IDENT)
-	      goto lex_end;
-	    if (cc->hash_entry)
-	      goto lex_cont;
-	    j=1;
-	    do {
-	      if (ch=LexGetChar(cc)) {
-		if (ch=='#') {
-		  if (!Lex(cc))
-		    goto lex_end;
-		  i=PrsKeyWord(cc);
-		  if (i==KW_IF || i==KW_IFDEF || i==KW_IFNDEF ||
-			i==KW_IFAOT || i==KW_IFJIT)
-		    j++;
-		  else if (i==KW_ENDIF)
-		    j--;
-		  else if (i==KW_ELSE && j==1)
-		    break;
-		}
-	      } else {
-		cc->token=TK_EOF;
-		goto lex_end;
-	      }
-	    } while (j);
-	    break;
-	  case KW_IFNDEF:
-	    if (cc->flags & CCF_IN_IF) {
-	      cc->token=TK_IFNDEF;
-	      goto lex_end;
-	    }
-lex_ifndef:
-	    cc->flags|=CCF_NO_DEFINES;
-	    if (!Lex(cc)) {
-	      cc->flags&=~CCF_NO_DEFINES;
-	      goto lex_end;
-	    }
-	    cc->flags&=~CCF_NO_DEFINES;
-	    if (cc->token!=TK_IDENT)
-	      goto lex_end;
-	    if (!cc->hash_entry)
-	      goto lex_cont;
-	    j=1;
-	    do {
-	      if (ch=LexGetChar(cc)) {
-		if (ch=='#') {
-		  if (!Lex(cc))
-		    goto lex_end;
-		  i=PrsKeyWord(cc);
-		  if (i==KW_IF || i==KW_IFDEF || i==KW_IFNDEF ||
-			i==KW_IFAOT || i==KW_IFJIT)
-		    j++;
-		  else if (i==KW_ENDIF)
-		    j--;
-		  else if (i==KW_ELSE && j==1)
-		    break;
-		}
-	      } else {
-		cc->token=TK_EOF;
-		goto lex_end;
-	      }
-	    } while (j);
-	    break;
-	  case KW_IFAOT:
-	    if (cc->flags & CCF_IN_IF) {
-	      cc->token=TK_IFAOT;
-	      goto lex_end;
-	    }
-lex_ifaot:
-	    if (cc->flags & CCF_AOT_COMPILE)
-	      goto lex_cont;
-	    j=1;
-	    do {
-	      if (ch=LexGetChar(cc)) {
-		if (ch=='#') {
-		  if (!Lex(cc))
-		    goto lex_end;
-		  i=PrsKeyWord(cc);
-		  if (i==KW_IF || i==KW_IFDEF || i==KW_IFNDEF ||
-			i==KW_IFAOT || i==KW_IFJIT)
-		    j++;
-		  else if (i==KW_ENDIF)
-		    j--;
-		  else if (i==KW_ELSE && j==1)
-		    break;
-		}
-	      } else {
-		cc->token=TK_EOF;
-		goto lex_end;
-	      }
-	    } while (j);
-	    break;
-	  case KW_IFJIT:
-	    if (cc->flags & CCF_IN_IF) {
-	      cc->token=TK_IFAOT;
-	      goto lex_end;
-	    }
-lex_ifjit:
-	    if (!(cc->flags & CCF_AOT_COMPILE))
-	      goto lex_cont;
-	    j=1;
-	    do {
-	      if (ch=LexGetChar(cc)) {
-		if (ch=='#') {
-		  if (!Lex(cc))
-		    goto lex_end;
-		  i=PrsKeyWord(cc);
-		  if (i==KW_IF || i==KW_IFDEF || i==KW_IFNDEF ||
-			i==KW_IFAOT || i==KW_IFJIT)
-		    j++;
-		  else if (i==KW_ENDIF)
-		    j--;
-		  else if (i==KW_ELSE && j==1)
-		    break;
-		}
-	      } else {
-		cc->token=TK_EOF;
-		goto lex_end;
-	      }
-	    } while (j);
 	    break;
 	  case KW_ENDIF:
 	    if (cc->flags & CCF_IN_IF) {

@@ -2108,10 +2108,6 @@ class CAOTCtrl
 #define TK_ADD_EQU	0x119
 #define TK_SUB_EQU	0x11A
 #define TK_IF		0x11B
-#define TK_IFDEF	0x11C
-#define TK_IFNDEF	0x11D
-#define TK_IFAOT	0x11E
-#define TK_IFJIT	0x11F
 #define TK_ENDIF	0x120
 #define TK_ELSE		0x121
 #define TK_MOD_EQU	0x122

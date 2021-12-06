@@ -17,7 +17,6 @@ U0 EdReplaceTroubleAll(CDoc *doc,Bool to_safe,Bool sel)
   EdReplaceTroubleOne(doc,"#assert" ,"//<@%d@>"  ,i++,to_safe,sel);
   EdReplaceTroubleOne(doc,"#define" ,"//<@%d@>"  ,i++,to_safe,sel);
   EdReplaceTroubleOne(doc,"#include","//<@%d@>"  ,i++,to_safe,sel);
-//#if will match #if,#ifdef,#ifndef,#ifaot and #ifjit
   EdReplaceTroubleOne(doc,"#if"     ,"//<@%d@>"  ,i++,to_safe,sel);
   EdReplaceTroubleOne(doc,"#endif"  ,"//<@%d@>"  ,i++,to_safe,sel);
 //Convert #exe to union because we want that indent pattern.

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from __future__ import print_function, absolute_import, division
 
 import base64
@@ -18,7 +18,7 @@ from time import time
 from time import localtime
 from time import strftime
 
-from fuse import FUSE, FuseOSError, Operations, LoggingMixIn
+from fusepy import FUSE, FuseOSError, Operations, LoggingMixIn
 
 if not hasattr(__builtins__, 'bytes'):
     bytes = str

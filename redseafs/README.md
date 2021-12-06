@@ -26,7 +26,7 @@ If the ISO.C file does not exist, a blank filesystem will be created (and writte
 
 Clone the repo, move `isoc-mount` and `isoc.py` to `/usr/bin`, `chmod +x`.
 
-On a Debian/Ubuntu system: `sudo apt install fuse; sudo apt install python-pip; sudo pip install fusepy`
+On a Debian/Ubuntu system: `sudo apt install fuse; sudo apt install python3-pip; sudo pip install fusepy`
 
 NOTE: This will install fusepy globally, if that's not what you want... then you probably don't need instructions anyway :P
 

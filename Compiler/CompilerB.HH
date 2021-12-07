@@ -62,9 +62,7 @@ public extern CMemberLstMeta *MemberMetaFind(U8 *st,CMemberLst *ml);
 public extern CHashClass *OptClassFwd(CHashClass *tmpc);
 public extern I64 PrsKeyWord(CCmpCtrl *cc);
 
-#help_index "Compiler;Cmd Line (Typically)"
-extern I64 Cmp(U8 *filename,
-	U8 *map_name=NULL,U8 *out_name=NULL,U8 mapfile_drv_let=0);
+extern CAOT *CmpBuf(U8 *buf,U8 *map_name,I64 *error_cnt,I64 *warning_cnt,U8 mapfile_drv_let);
 
 #help_index "Debugging/Unassemble"
 public extern U8 *U(U8 *rip,I64 cnt=20,I64 seg_size=64);

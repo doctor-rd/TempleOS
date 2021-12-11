@@ -511,12 +511,6 @@ I64 ExeFile2(U8 *name,I64 ccf_flags=0)
   return res;
 }
 
-I64 RunFile2(U8 *name,I64 ccf_flags=0,...)
-{//$LK,"ExeFile2",A="MN:ExeFile2"$() with args using $LK,"LastFun",A="MN:LastFun"$(). throws exceptions.
-  ExeFile2(name,ccf_flags);
-  return LastFun(argc,argv);
-}
-
 I64 StreamExePrint(U8 *fmt,...)
 {//Causes value from stream to be used in an #exe{} block.
   U8 *buf=StrPrintJoin(NULL,fmt,argc,argv);

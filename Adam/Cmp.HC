@@ -151,3 +151,9 @@ I64 Cmp(U8 *filename,U8 *map_name=NULL,U8 *out_name=NULL,U8 mapfile_drv_let=0)
 	error_cnt,warning_cnt,aot_U8s,size);
   return error_cnt;
 }
+
+I64 RunFile(U8 *name,I64 ccf_flags=0,...)
+{//$LK,"ExeFile",A="MN:ExeFile"$() with args using $LK,"LastFun",A="MN:LastFun"$().
+  ExeFile(name,ccf_flags);
+  return LastFun(argc,argv);
+}

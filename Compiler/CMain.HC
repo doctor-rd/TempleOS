@@ -469,12 +469,6 @@ I64 ExeFile(U8 *name,I64 ccf_flags=0)
   return res;
 }
 
-I64 RunFile(U8 *name,I64 ccf_flags=0,...)
-{//$LK,"ExeFile",A="MN:ExeFile"$() with args using $LK,"LastFun",A="MN:LastFun"$().
-  ExeFile(name,ccf_flags);
-  return LastFun(argc,argv);
-}
-
 I64 ExePutS2(U8 *buf,U8 *filename=NULL,I64 ccf_flags=0)
 {//throws exceptions
   I64 res;
